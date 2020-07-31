@@ -1,4 +1,4 @@
 ### TODO
 
-- [] Make Header Component
-- [] Make a Protected Route
+- [ ] Make Header Component
+- [ ] Make a Protected Route
