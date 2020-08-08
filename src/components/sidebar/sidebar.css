@@ -1,4 +1,9 @@
 #sidebar{
     background-color: white;
     min-width: 200px;
+    transition:all .2s ease-in-out;
+    text-align: left;
+}
+#sidebar.hide{
+    margin-left: -200px;
 }
