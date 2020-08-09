@@ -5,18 +5,26 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import { useSidebarState } from '../../store';
+import { useSidebarState, user } from '../../store';
 import { Link } from 'react-router-dom';
+
 
 
 export default (props) => {
     const toggleSidebar = useSidebarState();
+
+    const toggleIcon = () => {
+        return(
+            <IconButton edge="start" onClick={toggleSidebar} color="inherit" aria-label="menu">
+                <MenuIcon />
+            </IconButton>
+        )
+    }
+
     return (
-        <AppBar elevation={0} style={{ background: 'transparent',color: "black"}} position="static" id="main-header">
+        <AppBar elevation={0} style={{ background: 'transparent', color: "black" }} position="static" id="main-header">
             <Toolbar>
-                <IconButton edge="start" onClick={toggleSidebar} color="inherit" aria-label="menu">
-                    <MenuIcon />
-                </IconButton>
+                {!user ? toggleIcon() : null}
                 <Button className="custom-home-link custom-nav-links" component={Link} to="/" color="inherit">Home</Button>
                 <Button className="custom-nav-links" component={Link} to="/login" color="inherit">Login</Button>
             </Toolbar>
