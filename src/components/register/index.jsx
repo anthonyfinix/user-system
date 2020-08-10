@@ -9,35 +9,119 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import './register.css';
+import registerUser from './util/registerUser.js'
+import { Snackbar } from '@material-ui/core';
 
 export default () => {
     const [registrationDetails, setRegistrationDetails] = useState({ name: '', username: '', email: '', password: '', confirmPassword: '' });
     const [waiting, setWaiting] = useState(false)
-    const handleRegister = ()=>{
-        console.log("handle register");
+    const [snackBarState, setSnackBarState] = React.useState({
+        open: false,
+        message: ''
+    });
+    const handleSnackbarClose = () => {
+        setSnackBarState({ open: false, message: '' });
     }
-    const handleUsernameChange = ()=>{
-        console.log("handleUsernameChange");
+    const handleRegister = () => {
+        setWaiting(true)
+        registerUser(registrationDetails)
+            .then((response) => {
+                if (response.err) {
+                    setSnackBarState({ open: true, message: response.err })
+                    setWaiting(false)
+                    return;
+                };
+                console.log(response)
+            })
     }
-    const handlePasswordChange = ()=>{
-        console.log("handlePasswordChange");
+    const handleNameChange = (e) => {
+        setRegistrationDetails({
+            ...registrationDetails,
+            name: e.target.value,
+        })
+    }
+    const handleEmailChange = (e) => {
+        setRegistrationDetails({
+            ...registrationDetails,
+            email: e.target.value,
+        })
+    }
+    const handleUsernameChange = (e) => {
+        setRegistrationDetails({
+            ...registrationDetails,
+            username: e.target.value,
+        })
+    }
+    const handlePasswordChange = (e) => {
+        setRegistrationDetails({
+            ...registrationDetails,
+            password: e.target.value,
+        })
+    }
+    const handleConfirmPasswordChange = (e) => {
+        setRegistrationDetails({
+            ...registrationDetails,
+            confirmPassword: e.target.value,
+        })
     }
     return (
-        <Box id="login-wrapper" display="flex" justifyContent="center" alignItems="center">
+        <Box id="register-wrapper" display="flex" justifyContent="center" alignItems="center">
             <Card className="login-card" elevation={0}>
                 {waiting ? <LinearProgress /> : null}
                 <CardContent>
                     <Typography variant="h6" gutterBottom>LOGIN</Typography>
                     <Box mt={3}>
-                        <TextField variant="outlined" size="small" onChange={handleUsernameChange} value={registrationDetails.username} style={{ marginBottom: 10, width: '100%' }} label="Username" />
-                        <TextField variant="outlined" size="small" onChange={handlePasswordChange} value={registrationDetails.password} style={{ width: '100%' }} label="Password" />
+                        <TextField
+                            variant="outlined"
+                            size="small"
+                            className="custom-form-styles"
+                            onChange={handleNameChange}
+                            value={registrationDetails.name}
+                            label="Full Name" />
+                        <TextField
+                            variant="outlined"
+                            size="small"
+                            className="custom-form-styles"
+                            onChange={handleUsernameChange}
+                            value={registrationDetails.username}
+                            label="Username" />
+                        <TextField
+                            variant="outlined"
+                            size="small"
+                            className="custom-form-styles"
+                            onChange={handleEmailChange}
+                            value={registrationDetails.email}
+                            label="Email" />
+                        <TextField
+                            variant="outlined"
+                            size="small"
+                            className="custom-form-styles"
+                            onChange={handlePasswordChange}
+                            value={registrationDetails.password}
+                            label="Password" />
+                        <TextField
+                            variant="outlined"
+                            size="small"
+                            className="custom-form-styles"
+                            onChange={handleConfirmPasswordChange}
+                            value={registrationDetails.ConfirmPassword}
+                            label="Confirm Password" />
                     </Box>
                 </CardContent>
                 <CardActions>
-                    <Button component={Link} to='/login'>Login</Button>
+                    <Button component={Link} to='/login' size="small">Login</Button>
                     <Button onClick={handleRegister} style={{ marginLeft: 'auto' }} color="inherit" disabled={waiting} size="small">REgister</Button>
                 </CardActions>
             </Card>
+            <Snackbar
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                    open={snackBarState.open}
+                    autoHideDuration={6000}
+                    onClose={handleSnackbarClose}
+                    message={snackBarState.message}
+                    key='loginResponse'
+                />
         </Box>
     )
 }

@@ -5,6 +5,6 @@ import { useRecoilValue } from 'recoil';
 
 export default ({ component: Component, ...rest }) => {
     let userState = useRecoilValue(user);
-    if (!userState) return <Route {...rest} render={props => { return <Component props /> }}></Route>
-    return <Route {...rest} render={props => <Redirect to={'/app'} />}></Route>
+    if (!userState) return <Route {...rest} render={props => { return <Redirect to="/login" /> }}></Route>
+    return <Route {...rest} render={props => <Component props />}></Route>
 }

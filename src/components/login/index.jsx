@@ -12,17 +12,25 @@ import './login.css'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useUser } from '../../store'
+import { Snackbar } from '@material-ui/core';
 
 export default () => {
     let setUser = useUser();
-    const [loginDetails, setLoginDetails] = useState({ username: '', password: '' })
-    const [waiting, setWaiting] = useState(false)
+    const [loginDetails, setLoginDetails] = useState({ username: '', password: '' });
+    const [waiting, setWaiting] = useState(false);
+    const [snackBarState, setSnackBarState] = React.useState({
+        open: false,
+        message: ''
+    });
+    const handleSnackbarClose = () => {
+        setSnackBarState({ open: false, message: '' });
+    }
     const handleLogin = (e) => {
         setWaiting(true)
         authenticate(loginDetails)
             .then((response) => {
                 if (response.err) {
-                    console.log(response.err)
+                    setSnackBarState({ open: true, message: response.err })
                     setWaiting(false)
                     return;
                 };
@@ -42,14 +50,34 @@ export default () => {
                 <CardContent>
                     <Typography variant="h6" gutterBottom>LOGIN</Typography>
                     <Box mt={3}>
-                        <TextField variant="outlined" size="small" onChange={handleUsernameChange} value={loginDetails.username} style={{ marginBottom: 10, width: '100%' }} label="Username" />
-                        <TextField variant="outlined" size="small" onChange={handlePasswordChange} value={loginDetails.password} style={{ width: '100%' }} label="Password" />
+                        <TextField
+                            className="custom-form-styles"
+                            variant="outlined"
+                            size="small"
+                            onChange={handleUsernameChange}
+                            value={loginDetails.username}
+                            label="Username" />
+                        <TextField
+                            className="custom-form-styles"
+                            variant="outlined"
+                            size="small"
+                            onChange={handlePasswordChange}
+                            value={loginDetails.password}
+                            label="Password" />
                     </Box>
                 </CardContent>
                 <CardActions>
                     <Button component={Link} to='/register'>Register</Button>
                     <Button onClick={handleLogin} style={{ marginLeft: 'auto' }} color="inherit" disabled={waiting} size="small">Login</Button>
                 </CardActions>
+                <Snackbar
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                    open={snackBarState.open}
+                    autoHideDuration={6000}
+                    onClose={handleSnackbarClose}
+                    message={snackBarState.message}
+                    key='loginResponse'
+                />
             </Card>
         </Box>
     )

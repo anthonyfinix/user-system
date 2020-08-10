@@ -7,6 +7,7 @@ import Login from "./components/login";
 import Register from "./components/register";
 import MainWrapper from "./components/main";
 import ProtectedRoute from './components/util/protectedRoute';
+import RedirectIfLogin from './components/util/redirectIfLoggedIn';
 import { BrowserRouter as Router, Route,Switch } from "react-router-dom";
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
             <Route exact path="/" component={Hero}></Route>
             <ProtectedRoute exact path="/login" component={Login}></ProtectedRoute>
             <ProtectedRoute exact path="/register" component={Register}></ProtectedRoute>
-            <Route exact path="/app" component={MainWrapper}></Route>
+            <RedirectIfLogin exact path="/app" component={MainWrapper}></RedirectIfLogin>
           </Switch>
         </div>
       </RecoilRoot>
