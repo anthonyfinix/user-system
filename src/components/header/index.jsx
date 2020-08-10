@@ -16,7 +16,6 @@ export default (props) => {
     const toggleSidebar = useSidebarState();
     const userState = useRecoilValue(user);
     let location = useLocation();
-    console.log(location)
     const toggleIcon = () => {
         return (
             <IconButton edge="start" onClick={toggleSidebar} color="inherit" aria-label="menu">
