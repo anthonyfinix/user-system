@@ -26,6 +26,7 @@ export default (props) => {
 
     const handleLogout = ()=>{
         setUser(false);
+        localStorage.removeItem('token')
     }
 
     const getLoggedInItems = () => {

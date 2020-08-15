@@ -8,6 +8,6 @@ export const useSidebarState = ()=>{
     }
 }
 export const useUser = ()=>{
-    const [user_state, setUserState] = useRecoilState(user)
-    return setUserState;
+    const userState = useRecoilState(user)
+    return userState[1];
 }

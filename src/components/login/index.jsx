@@ -34,7 +34,8 @@ export default () => {
                     setWaiting(false)
                     return;
                 };
-                setUser(response)
+                setUser({ ...response });
+                localStorage.setItem('token',response.accessToken)
             })
     }
     const handleUsernameChange = (e) => {
