@@ -1,6 +1,5 @@
 import React from "react";
 import "./App.css";
-import { RecoilRoot } from "recoil";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import UserCheck from "./components/util/userCheck";
 import Header from "./components/header";
@@ -16,7 +15,6 @@ import AppProvider from "./store/appContext";
 
 function App() {
   return (
-    <RecoilRoot>
       <AppProvider>
         <UserProvider>
           <Router>
@@ -35,7 +33,6 @@ function App() {
           </Router>
         </UserProvider>
       </AppProvider>
-    </RecoilRoot>
   );
 }
 

@@ -5,9 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-// import { user, useUser } from '../../store';
 import { Link, useLocation } from 'react-router-dom';
-// import { useRecoilValue } from 'recoil';
 import { AppContext } from '../../store/appContext';
 import { UserContext } from '../../store/userContext';
 
@@ -16,8 +14,6 @@ import { UserContext } from '../../store/userContext';
 export default (props) => {
     const { setUser,user } = useContext(UserContext)
     const { toggleSidebar } = useContext(AppContext)
-    // const setUser = useUser()
-    // const userState = useRecoilValue(user);
     let location = useLocation();
     const toggleIcon = () => {
         return (
