@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
@@ -11,11 +11,11 @@ import authenticate from './util/authenticate';
 import './login.css'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useUser } from '../../store'
+import { UserContext } from '../../store/userContext';
 import { Snackbar } from '@material-ui/core';
 
 export default () => {
-    let setUser = useUser();
+    const { setUser } = useContext(UserContext)
     const [loginDetails, setLoginDetails] = useState({ username: '', password: '' });
     const [waiting, setWaiting] = useState(false);
     const [snackBarState, setSnackBarState] = React.useState({
@@ -34,8 +34,10 @@ export default () => {
                     setWaiting(false)
                     return;
                 };
-                setUser({ ...response });
-                localStorage.setItem('token',response.accessToken)
+                console.log(response)
+                setUser(response);
+                localStorage.setItem('token', response.token);
+
             })
     }
     const handleUsernameChange = (e) => {

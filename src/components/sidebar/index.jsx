@@ -1,7 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import "./sidebar.css";
-import { sidebarState } from '../../store';
-import { useRecoilValue } from 'recoil';
 import { pages } from '../../utils';
 import Box from '@material-ui/core/Box';
 import List from '@material-ui/core/List';
@@ -9,12 +7,13 @@ import ListItem from '@material-ui/core/Listitem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import { AppContext } from '../../store/appContext';
 
 
 export default () => {
-    const state = useRecoilValue(sidebarState)
+    const { sidebarState } = useContext(AppContext);
     return (
-        <Box id="sidebar"className={`${state ? "open" : "hide"}`}>
+        <Box id="sidebar" className={`${sidebarState ? "open" : "hide"}`}>
             <List>
                 {getPages()}
             </List>

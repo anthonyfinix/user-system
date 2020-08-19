@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { user } from '../../../store';
-import { useRecoilValue } from 'recoil';
+import { UserContext } from '../../../store/userContext';
 
 export default ({ component: Component, ...rest }) => {
-    let userState = useRecoilValue(user);
-    if (!userState) return <Route {...rest} render={props => { return <Redirect to="/login" /> }}></Route>
+    const { user } = useContext(UserContext)
+    if (!user.name) return <Route {...rest} render={props => { return <Redirect to="/login" /> }}></Route>
     return <Route {...rest} render={props => <Component props />}></Route>
 }

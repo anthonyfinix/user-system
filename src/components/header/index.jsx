@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './header.css';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import { useSidebarState, user, useUser } from '../../store';
+// import { user, useUser } from '../../store';
 import { Link, useLocation } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+// import { useRecoilValue } from 'recoil';
+import { AppContext } from '../../store/appContext';
+import { UserContext } from '../../store/userContext';
 
 
 
 export default (props) => {
-    const setUser = useUser()
-    const toggleSidebar = useSidebarState();
-    const userState = useRecoilValue(user);
+    const { setUser,user } = useContext(UserContext)
+    const { toggleSidebar } = useContext(AppContext)
+    // const setUser = useUser()
+    // const userState = useRecoilValue(user);
     let location = useLocation();
     const toggleIcon = () => {
         return (
@@ -24,7 +27,7 @@ export default (props) => {
         )
     }
 
-    const handleLogout = ()=>{
+    const handleLogout = () => {
         setUser(false);
         localStorage.removeItem('token')
     }
@@ -45,7 +48,7 @@ export default (props) => {
             <Toolbar>
                 {location.pathname === '/app' ? toggleIcon() : null}
                 <Button className="custom-home-link custom-nav-links" component={Link} to="/" color="inherit">Home</Button>
-                {userState ? getLoggedInItems() : getLoggedOutItems()}
+                {user.name ? getLoggedInItems() : getLoggedOutItems()}
             </Toolbar>
         </AppBar>
     )
